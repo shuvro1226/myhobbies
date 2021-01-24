@@ -15552,3 +15552,7 @@ a.text-dark:focus {
   }
 }
 
+a.nav-link.active {
+  background: #ddd;
+}
+
