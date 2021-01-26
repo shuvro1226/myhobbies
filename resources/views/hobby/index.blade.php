@@ -11,7 +11,18 @@
                    <ul class="list-group">
                         @foreach ($hobbies as $hobby)
                             <li class="list-group-item">
-                                {{ $hobby->name }}
+                                <a title="Show Details" href="/hobby/{{ $hobby->id }}">{{ $hobby->name }}</a>
+                                {{-- button to delete hobby --}}
+                                <form class="float-right ml-2" action="/hobby/{{$hobby->id}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger float-right">
+                                        <i class="fas fa-trash"></i> Delete Hobby
+                                    </button>
+                                </form>
+                                <a class="btn btn-sm btn-light float-right" href="/hobby/{{ $hobby->id }}/edit">
+                                    <i class="fas fa-edit"></i> Edit Hobby
+                                </a>
                             </li>
                         @endforeach
                    </ul>
