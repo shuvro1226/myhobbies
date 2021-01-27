@@ -24,6 +24,8 @@
                                     <option value="warning" {{ old('style') == 'warning' ? 'selected' : '' }}>Warning</option>
                                     <option value="info" {{ old('style') == 'info' ? 'selected' : '' }}>Info</option>
                                     <option value="danger" {{ old('style') == 'danger' ? 'selected' : '' }}>Danger</option>
+                                    <option value="light" {{ old('style') == 'light' ? 'selected' : '' }}>Light</option>
+                                    <option value="dark" {{ old('style') == 'dark' ? 'selected' : '' }}>Dark</option>
                                 </select>
                                 <small class="form-text text-danger">{!! $errors->first('style') !!}</small>
                             </div>

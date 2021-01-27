@@ -25,6 +25,8 @@
                                     <option value="warning" {{ old('style', $tag->style) == 'warning' ? 'selected' : '' }}>Warning</option>
                                     <option value="info" {{ old('style', $tag->style) == 'info' ? 'selected' : '' }}>Info</option>
                                     <option value="danger" {{ old('style', $tag->style) == 'danger' ? 'selected' : '' }}>Danger</option>
+                                    <option value="light" {{ old('style', $tag->style) == 'light' ? 'selected' : '' }}>Light</option>
+                                    <option value="dark" {{ old('style', $tag->style) == 'dark' ? 'selected' : '' }}>Dark</option>
                                 </select>
                                 <small class="form-text text-danger">{!! $errors->first('style') !!}</small>
                             </div>
