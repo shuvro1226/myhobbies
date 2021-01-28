@@ -10,10 +10,38 @@
                    <p>
                         {{ $hobby->description }}
                    </p>
+                   @if ($usedTags->count() > 0)
+                        <b>
+                            Used Tags:
+                        </b>
+                        (Click to remove)
+                        <p>
+                            @foreach ($usedTags as $tag)
+                                <a href="/hobby/{{ $hobby->id }}/tag/{{ $tag->id }}/detach">
+                                    <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
+                                </a>
+                            @endforeach
+                        </p>
+                   @endif
+
+                    @if ($availableTags->count() > 0)
+                        <b>
+                            Available Tags:
+                        </b>
+                        (Click to assign)
+                        <p>
+                            @foreach ($availableTags as $tag)
+                                <a href="/hobby/{{ $hobby->id }}/tag/{{ $tag->id }}/attach">
+                                    <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
+                                </a>
+                            @endforeach
+                        </p>
+                    @endif
                 </div>
             </div>
 
             <div class="mt-2">
+                @auth
                 <a href="/hobby/{{$hobby->id}}/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
                 {{-- button to delete hobby --}}
                 <form class="float-right ml-2" action="/hobby/{{$hobby->id}}" method="POST">
@@ -23,7 +51,9 @@
                         <i class="fas fa-trash"></i> Delete Hobby
                     </button>
                 </form>
-                <a href="/hobby" class="btn btn-primary float-right"><i class="fas fa-arrow-circle-up"></i> Back to overview</a>
+                @endauth
+
+                <a href="{{ URL::previous() }}" class="btn btn-primary float-right"><i class="fas fa-arrow-circle-up"></i> Back to overview</a>
             </div>
         </div>
     </div>

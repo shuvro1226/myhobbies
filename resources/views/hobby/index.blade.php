@@ -5,13 +5,27 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('All My Hobbies') }}</div>
+                <div class="card-header">
+                    @isset($filter)
+                        Hobbies filtered by <span class="badge badge-{{ $filter->style }}">{{ $filter->name }}</span>
+                        <a href="/hobby" class="float-right">Show all hobbies</a>
+                    @else
+                        {{ __('All My Hobbies') }}
+                    @endisset
+                </div>
 
                 <div class="card-body">
                    <ul class="list-group">
                         @foreach ($hobbies as $hobby)
                             <li class="list-group-item">
                                 <a title="Show Details" href="/hobby/{{ $hobby->id }}">{{ $hobby->name }}</a>
+                                <span class="mx-2">
+                                    Posted by: <a href="/user/{{ $hobby->user->id }}">{{ $hobby->user->name }}</a> ({{ $hobby->user->hobbies->count() }} Hobbies)
+                                </span>
+                                <span class="mx-2">
+                                    {{ $hobby->created_at->diffForHumans() }}
+                                </span>
+                                @auth
                                 {{-- button to delete hobby --}}
                                 <form class="float-right ml-2" action="/hobby/{{$hobby->id}}" method="POST">
                                     @csrf
@@ -23,15 +37,28 @@
                                 <a class="btn btn-sm btn-light float-right" href="/hobby/{{ $hobby->id }}/edit">
                                     <i class="fas fa-edit"></i> Edit Hobby
                                 </a>
+                                @endauth
+
+                                @foreach ($hobby->tags as $tag)
+                                    <a href="/hobby/tag/{{ $tag->id }}">
+                                        <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
+                                    </a>
+                                @endforeach
                             </li>
                         @endforeach
                    </ul>
                 </div>
             </div>
 
+            <div class="mt-3">
+                {{ $hobbies->links() }}
+            </div>
+
+            @auth
             <div class="mt-2">
                 <a href="/hobby/create" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> Create new hobby</a>
             </div>
+            @endauth
         </div>
     </div>
 </div>
