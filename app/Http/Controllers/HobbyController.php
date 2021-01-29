@@ -60,11 +60,12 @@ class HobbyController extends Controller
         ]);
 
         $hobby->save();
-        return $this->index()->with(
-            [
-                'message_success' => 'The hobby "'. $request->name .'" was created.'
-            ]
-        );
+
+        $availableTags = Tag::all();
+
+        return redirect('/hobby/' . $hobby->id)->with([
+            'message_warning' => 'The hobby "'. $request->name .'" was created. Please assign some tags now!'
+        ]);
     }
 
     /**
@@ -83,7 +84,8 @@ class HobbyController extends Controller
             'hobby' => $hobby,
             'usedTags' => $usedTags,
             'availableTags' => $availableTags,
-            'message_success' => Session::get('message_success')
+            'message_success' => Session::get('message_success'),
+            'message_warning' => Session::get('message_warning')
         ]);
     }
 
@@ -119,7 +121,7 @@ class HobbyController extends Controller
             'description' => $request->description
         ]);
 
-        return $this->index()->with(
+        return redirect('/hobby/' . $hobby->id)->with(
             [
                 'message_success' => 'The hobby "'. $request->name .'" was updated.'
             ]

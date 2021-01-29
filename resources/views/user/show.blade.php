@@ -15,6 +15,31 @@
                     <p>
                         <b>About the user:</b> {{ $user->about_me }}
                     </p>
+                    @if($user->hobbies->count() > 0)
+                        <p>
+                            Hobbies of {{ $user->name }}
+                        </p>
+                        <ul class="list-group my-4">
+                            @foreach ($user->hobbies as $hobby)
+                                <li class="list-group-item">
+                                    <a title="Show Details" href="/hobby/{{ $hobby->id }}">{{ $hobby->name }}</a>
+                                    <span class="mx-2">
+                                        {{ $hobby->created_at->diffForHumans() }}
+                                    </span>
+
+                                    @foreach ($hobby->tags as $tag)
+                                        <a href="/hobby/tag/{{ $tag->id }}">
+                                            <span class="badge badge-{{ $tag->style }}">{{ $tag->name }}</span>
+                                        </a>
+                                    @endforeach
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>
+                            {{ $user->name }} hasn't created any hobbies yet!
+                        </p>
+                    @endif
                 </div>
             </div>
 
